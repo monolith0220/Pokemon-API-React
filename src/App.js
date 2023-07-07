@@ -9,11 +9,21 @@ function App() {
   useEffect(() => {
     const fetchPokemonData = async ()=> {
       let res = await getAllPokemon(initialURL)
-      console.log(res)
+      loadPokemon(res.results)
       setLoading(false)
     }
     fetchPokemonData()
   }, [])
+
+  const loadPokemon = async (data) => {
+    let _pokemonData = Promise.all(
+      data.map((pokemon) => {
+        let pokemonRecord = await getPokemon(pokemon.url)
+        return pokemonRecord
+      })
+    )
+      return _pokemonData
+  }
 
   return (
     <div className="App">
