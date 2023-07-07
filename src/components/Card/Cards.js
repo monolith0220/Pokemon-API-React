@@ -1,12 +1,11 @@
 import "./card.css"
 
 export const Cards = ({ pokemon }) => {
-	console.log(pokemon)
   return (
 	<div className='card'>
 		<div className='cardImg'><img src={pokemon.sprites.front_default} /></div>
 		<h3 className='cardName'>{pokemon.name}</h3>
-		<ul>
+		<ul className="type">
 			{pokemon.types.map((type, i) => {
 				return (
 					<li key={i}>{type.type.name}</li>
