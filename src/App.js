@@ -16,7 +16,7 @@ function App() {
       let res = await getAllPokemon(initialURL)
       loadPokemon(res.results)
       setNextPage(res.next)
-      setNextPage(res.next)
+      setprevPage(res.prev)
       setLoading(false)
     }
     fetchPokemonData()
@@ -32,7 +32,11 @@ function App() {
     setPokemonData(_pokemonData)
   }
 
-  const handlePrev = () => {
+  const handlePrev = async () => {
+    setLoading(true)
+    let data = await getAllPokemon(nextPage)
+    loadPokemon(data.results)
+    setLoading(false)
 
   }
 
@@ -40,6 +44,7 @@ function App() {
     setLoading(true)
     let data = await getAllPokemon(nextPage)
     loadPokemon(data.results)
+    setNextPage(data.next)
     setLoading(false)
   }
 
