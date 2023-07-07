@@ -9,14 +9,14 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [pokemonData, setPokemonData] = useState([])
   const [nextPage, setNextPage] = useState("")
-  const [prevPage, setprevPage] = useState("")
+  const [prevPage, setPrevPage] = useState("")
 
   useEffect(() => {
     const fetchPokemonData = async ()=> {
       let res = await getAllPokemon(initialURL)
+      console.log(res)
       loadPokemon(res.results)
       setNextPage(res.next)
-      setprevPage(res.prev)
       setLoading(false)
     }
     fetchPokemonData()
@@ -33,9 +33,13 @@ function App() {
   }
 
   const handlePrev = async () => {
+    if(!prevPage) return
+
     setLoading(true)
-    let data = await getAllPokemon(nextPage)
+    let data = await getAllPokemon(prevPage)
     loadPokemon(data.results)
+    setNextPage(data.next)
+    setPrevPage(data.previous)
     setLoading(false)
 
   }
@@ -45,6 +49,7 @@ function App() {
     let data = await getAllPokemon(nextPage)
     loadPokemon(data.results)
     setNextPage(data.next)
+    setPrevPage(data.previous)
     setLoading(false)
   }
 
